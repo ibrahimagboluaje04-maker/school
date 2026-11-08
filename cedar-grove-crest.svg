@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title desc">
+  <title id="title">Cedar Grove Academy crest</title>
+  <desc id="desc">A lemon-green school crest with a young tree growing from an open book.</desc>
+  <path d="M60 5 108 22v36c0 29-19 47-48 57C31 105 12 87 12 58V22Z" fill="#c9e84a" stroke="#193a24" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M60 14 99 28v30c0 23-14 39-39 49C35 97 21 81 21 58V28Z" fill="#fbfced"/>
+  <path d="M60 59V39" fill="none" stroke="#315b2d" stroke-width="5" stroke-linecap="round"/>
+  <path d="M59 42C43 42 35 33 39 23c12 0 21 6 22 17Z" fill="#79a934" stroke="#193a24" stroke-width="2"/>
+  <path d="M61 39c1-13 10-21 22-19 2 11-5 20-22 22Z" fill="#a8ce3d" stroke="#193a24" stroke-width="2"/>
+  <path d="M60 57c-7-9-16-12-27-10v27c11-2 20 1 27 9 7-8 16-11 27-9V47c-11-2-20 1-27 10Z" fill="#244b29"/>
+  <path d="M60 57v26M33 52c10-1 18 2 27 9m27-9c-10-1-18 2-27 9" fill="none" stroke="#fbfced" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M43 90h34" stroke="#c9e84a" stroke-width="3" stroke-linecap="round"/>
+</svg>
