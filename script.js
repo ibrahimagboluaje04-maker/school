@@ -1,81 +1,658 @@
-// Cedar Grove Academy - frontend interactions
-// Add this class only when JavaScript is running so content remains visible
-// when scripts are blocked or unavailable.
-document.documentElement.classList.add('js-enabled');
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Cedar Grove Academy is a nursery, primary and secondary school in Oluyole, Ibadan.">
+  <meta name="theme-color" content="#c9e84a">
 
-document.addEventListener('DOMContentLoaded', () => {
-  const navbar = document.querySelector('.site-nav');
-  const backToTop = document.querySelector('.back-to-top');
-  const year = document.querySelectorAll('[data-current-year]');
+  <title>Welcome | Cedar Grove Academy</title>
 
-  year.forEach((node) => { node.textContent = new Date().getFullYear(); });
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  const updateScrollUI = () => {
-    const moved = window.scrollY > 24;
-    navbar?.classList.toggle('scrolled', moved);
-    backToTop?.classList.toggle('show', window.scrollY > 450);
-  };
-  updateScrollUI();
-  window.addEventListener('scroll', updateScrollUI, { passive: true });
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-  // Reveal elements as they enter the viewport.
-  const revealItems = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries, currentObserver) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          currentObserver.unobserve(entry.target);
+  <script>
+    tailwind = {
+      config: {
+        corePlugins: {
+          preflight: false
         }
-      });
-    }, { threshold: 0.12 });
-    revealItems.forEach((item) => observer.observe(item));
-  } else {
-    revealItems.forEach((item) => item.classList.add('visible'));
-  }
+      }
+    };
+  </script>
 
-  // Gallery category filters.
-  const filterButtons = document.querySelectorAll('[data-gallery-filter]');
-  const galleryItems = document.querySelectorAll('[data-gallery-category]');
-  filterButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const selected = button.dataset.galleryFilter;
-      filterButtons.forEach((item) => item.classList.toggle('active', item === button));
-      galleryItems.forEach((item) => {
-        item.hidden = selected !== 'all' && item.dataset.galleryCategory !== selected;
-      });
-    });
-  });
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  // Frontend-only enquiry form: validates and stores submissions in this browser.
-  const contactForm = document.querySelector('#contactForm');
-  const formStatus = document.querySelector('#formStatus');
-  contactForm?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    if (!contactForm.checkValidity()) {
-      contactForm.classList.add('was-validated');
-      showFormMessage('Please complete the required fields with valid information.', 'error');
-      return;
-    }
+  <link href="./style.css" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="./cedar-grove-crest.svg">
+</head>
 
-    const formData = Object.fromEntries(new FormData(contactForm).entries());
-    try {
-      const savedMessages = JSON.parse(localStorage.getItem('cedargroveacademy_enquiries') || '[]');
-      savedMessages.push({ ...formData, submittedAt: new Date().toISOString() });
-      localStorage.setItem('cedargroveacademy_enquiries', JSON.stringify(savedMessages));
-      contactForm.reset();
-      contactForm.classList.remove('was-validated');
-      showFormMessage('Thank you for contacting Cedar Grove Academy. Your demo enquiry has been saved in this browser.', 'success');
-    } catch (error) {
-      showFormMessage('Your browser could not save this demo enquiry. Please check your browser storage settings.', 'error');
-    }
-  });
+<body>
 
-  function showFormMessage(message, type) {
-    if (!formStatus) return;
-    formStatus.textContent = message;
-    formStatus.className = `form-status show ${type}`;
-  }
-});
+<div class="topbar py-2">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div>
+      <span class="me-3">&#9993; hello@cedargrove.academy</span>
+      <span>&#9742; +234 800 000 0148</span>
+    </div>
+
+    <div class="topbar-right">
+      <span class="me-3">Nursery · Primary · Secondary</span>
+      <a href="./admissions.html">Ask about admissions &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<header class="site-nav sticky-top">
+  <nav class="navbar navbar-expand-xl">
+    <div class="container">
+
+      <a class="navbar-brand d-flex align-items-center gap-2 me-4"
+         href="./index.html"
+         aria-label="Cedar Grove Academy home">
+
+        <img class="brand-logo" src="./cedar-grove-crest.svg" alt="">
+
+        <span>
+          <span class="brand-name d-block">Cedar Grove Academy</span>
+          <span class="brand-sub d-block">Learning well. Growing confidently.</span>
+        </span>
+      </a>
+
+      <button
+        class="navbar-toggler border-0 shadow-none"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#mainNav"
+        aria-controls="mainNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+
+        <ul class="navbar-nav ms-auto align-items-xl-center">
+
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="./about.html">About</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="./academics.html">Academics</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="./admissions.html">Admissions</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="./facilities.html">Facilities</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="./staff.html">Our Staff</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="./news.html">News & Events</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="./gallery.html">Gallery</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="./contact.html">Contact</a>
+          </li>
+
+        </ul>
+
+        <a class="btn btn-brand ms-xl-3 mt-3 mt-xl-0"
+           href="./admissions.html">
+
+          Explore Admissions <span aria-hidden="true">&rarr;</span>
+
+        </a>
+
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+
+      <span class="eyebrow">A school that puts children first</span>
+
+      <h1>
+        A good start makes room for
+        <span class="text-lime-200">a bright future.</span>
+      </h1>
+
+      <p>
+        A nursery, primary and secondary school in Oluyole, Ibadan,
+        where children build strong foundations, learn to think
+        for themselves and grow in confidence.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-brand" href="./about.html">
+          Explore the school <span aria-hidden="true">&rarr;</span>
+        </a>
+
+        <a class="btn btn-outline-brand" href="./admissions.html">
+          Ask about admissions
+        </a>
+      </div>
+
+      <div class="hero-note">
+        <div class="avatar-stack">
+          <span>CG</span>
+          <span>N</span>
+          <span>P</span>
+          <span>S</span>
+        </div>
+
+        <span>A welcoming school community in Oluyole, Ibadan.</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="quick-facts">
+  <div class="container">
+    <div class="fact-panel">
+
+      <div class="row g-4">
+
+        <div class="col-6 col-lg-3">
+          <div class="fact-item">
+            <span class="fact-icon">✦</span>
+            <div>
+              <strong>Nursery – SS3</strong>
+              <small>From early years to senior school</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+          <div class="fact-item">
+            <span class="fact-icon">♧</span>
+            <div>
+              <strong>Small classes</strong>
+              <small>Room for individual attention</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+          <div class="fact-item">
+            <span class="fact-icon">◎</span>
+            <div>
+              <strong>3 sections</strong>
+              <small>Early years, primary and secondary</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+          <div class="fact-item">
+            <span class="fact-icon">☆</span>
+            <div>
+              <strong>Every day</strong>
+              <small>Learning inside and outside class</small>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="container">
+
+    <div class="row align-items-center g-5">
+
+      <div class="col-lg-6 reveal">
+        <div class="image-frame">
+
+          <img
+            class="split-image"
+            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1100&q=85"
+            alt="Students learning together in a bright classroom">
+
+          <div class="image-note">
+            <strong>Learn with purpose.</strong>
+            <span>Grow with confidence. Belong for life.</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-lg-6 reveal">
+
+        <span class="eyebrow">A school that knows its pupils</span>
+
+        <div class="section-heading mb-0">
+
+          <h2>A place where every child is known.</h2>
+
+          <p>
+            We want pupils to leave each day having learned something new,
+            tried something difficult and treated someone well.
+            Our teachers take time to understand how each child learns
+            and help them make steady progress.
+          </p>
+
+        </div>
+
+        <ul class="check-list">
+          <li>Teachers who take an interest in each child’s progress.</li>
+          <li>Clear lessons in literacy, numeracy, science and the arts.</li>
+          <li>Clubs, sports and group activities that build confidence.</li>
+        </ul>
+
+        <a class="text-link" href="./about.html">
+          Read about the academy <span>→</span>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad section-soft">
+  <div class="container">
+
+    <div class="section-heading text-center mx-auto">
+
+      <span class="eyebrow">Learning pathways</span>
+
+      <h2>From first steps to senior school.</h2>
+
+      <p>
+        Each stage has its own focus, with teachers helping pupils
+        build the knowledge and habits they need for the next one.
+      </p>
+
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-md-4 reveal">
+        <article class="program-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=850&q=80"
+            alt="Young children enjoying an early learning activity">
+
+          <div class="card-body-custom">
+            <span class="pill">Early years</span>
+            <h3 class="mt-3">Early Years</h3>
+
+            <p>
+              Play, stories, numbers, music and practical activities
+              help our youngest pupils settle in and learn with confidence.
+            </p>
+
+            <a class="text-link" href="./academics.html">
+              Explore programme →
+            </a>
+          </div>
+
+        </article>
+      </div>
+
+      <div class="col-md-4 reveal">
+        <article class="program-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=850&q=80"
+            alt="Primary school pupils working in class">
+
+          <div class="card-body-custom">
+            <span class="pill">Primary</span>
+            <h3 class="mt-3">Primary School</h3>
+
+            <p>
+              Pupils strengthen reading, writing and mathematics
+              while exploring science, creative arts and their world.
+            </p>
+
+            <a class="text-link" href="./academics.html">
+              Explore programme →
+            </a>
+          </div>
+
+        </article>
+      </div>
+
+      <div class="col-md-4 reveal">
+        <article class="program-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=850&q=80"
+            alt="Secondary students collaborating on a classroom project">
+
+          <div class="card-body-custom">
+            <span class="pill">Secondary</span>
+            <h3 class="mt-3">Secondary School</h3>
+
+            <p>
+              Students build subject knowledge, prepare for examinations
+              and learn to take responsibility for their work.
+            </p>
+
+            <a class="text-link" href="./academics.html">
+              Explore programme →
+            </a>
+          </div>
+
+        </article>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="container">
+
+    <div class="row align-items-center g-5">
+
+      <div class="col-lg-5 reveal">
+
+        <span class="eyebrow">Life at Cedar Grove</span>
+
+        <div class="section-heading mb-4">
+
+          <h2>Learning does not stop when the lesson ends.</h2>
+
+          <p>
+            From the library and science room to sports, music and school
+            events, pupils have different ways to practise what they learn
+            and discover what they enjoy.
+          </p>
+
+        </div>
+
+        <a href="./facilities.html" class="text-link">
+          See our school facilities →
+        </a>
+
+      </div>
+
+      <div class="col-lg-7">
+
+        <div class="row g-3">
+
+          <div class="col-sm-6 reveal">
+            <div class="value-card">
+              <div class="card-icon">♡</div>
+              <h3>Care and belonging</h3>
+              <p>We create a respectful community where every student feels seen, heard and supported.</p>
+            </div>
+          </div>
+
+          <div class="col-sm-6 reveal">
+            <div class="value-card">
+              <div class="card-icon">✧</div>
+              <h3>Curiosity and discovery</h3>
+              <p>Students are encouraged to ask questions, experiment and take ownership of learning.</p>
+            </div>
+          </div>
+
+          <div class="col-sm-6 reveal">
+            <div class="value-card">
+              <div class="card-icon">⌁</div>
+              <h3>Character and integrity</h3>
+              <p>Kindness, responsibility and respect are part of everyday school life.</p>
+            </div>
+          </div>
+
+          <div class="col-sm-6 reveal">
+            <div class="value-card">
+              <div class="card-icon">↗</div>
+              <h3>Confidence for the future</h3>
+              <p>We help young people build the skills and confidence to embrace new possibilities.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad section-soft">
+  <div class="container">
+
+    <div class="quote-band reveal">
+
+      <span class="eyebrow">What matters to us</span>
+
+      <blockquote>
+        “We want our pupils to leave Cedar Grove with a sound education,
+        good manners and the confidence to take on their next step.”
+      </blockquote>
+
+      <div class="quote-by">— The Cedar Grove Academy Team</div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="container">
+
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+
+      <div class="section-heading mb-0">
+        <span class="eyebrow">School life</span>
+
+        <h2>News and activities from Cedar Grove.</h2>
+
+        <p>
+          A look at classroom projects, reading days, sports and events
+          across the school year.
+        </p>
+      </div>
+
+      <a class="text-link" href="./news.html">
+        View all updates →
+      </a>
+
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-md-4 reveal">
+        <article class="news-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=850&q=80"
+            alt="Students taking part in a classroom activity">
+
+          <div class="card-body-custom">
+            <div class="news-meta">School life · 12 September</div>
+            <h3 class="mt-2">A new term, a fresh chapter</h3>
+
+            <p>
+              We welcomed learners back with new goals, new friendships
+              and plenty to look forward to.
+            </p>
+
+            <a href="./news.html" class="text-link">Read story →</a>
+          </div>
+
+        </article>
+      </div>
+
+      <div class="col-md-4 reveal">
+        <article class="news-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=850&q=80"
+            alt="Students collaborating on a school project">
+
+          <div class="card-body-custom">
+            <div class="news-meta">Learning · 04 October</div>
+            <h3 class="mt-2">Ideas become action in project week</h3>
+
+            <p>
+              Our students explored real-world questions through teamwork,
+              creativity and research.
+            </p>
+
+            <a href="./news.html" class="text-link">Read story →</a>
+          </div>
+
+        </article>
+      </div>
+
+      <div class="col-md-4 reveal">
+        <article class="news-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=850&q=80"
+            alt="School children enjoying an outdoor activity">
+
+          <div class="card-body-custom">
+            <div class="news-meta">Community · 21 October</div>
+            <h3 class="mt-2">Celebrating a community of readers</h3>
+
+            <p>
+              Our reading celebration brought stories, families
+              and young imaginations together.
+            </p>
+
+            <a href="./news.html" class="text-link">Read story →</a>
+          </div>
+
+        </article>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<section class="cta-section">
+  <div class="container">
+
+    <div class="cta-panel">
+
+      <div>
+        <span class="eyebrow">Your next chapter starts here</span>
+
+        <h2>Give your child room to thrive.</h2>
+
+        <p>
+          Discover a learning community built around curiosity,
+          confidence and care.
+        </p>
+      </div>
+
+      <a class="btn btn-brand" href="./admissions.html">
+        Explore Admissions <span aria-hidden="true">&rarr;</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+
+    <div class="row g-4">
+
+      <div class="col-lg-4 col-md-6">
+
+        <a href="./index.html" class="d-inline-flex align-items-center gap-2 mb-3">
+
+          <img class="brand-logo" src="./cedar-grove-crest.svg" alt="">
+
+          <span>
+            <span class="brand-name d-block">Cedar Grove Academy</span>
+            <span class="brand-sub d-block">Learning well. Growing confidently.</span>
+          </span>
+
+        </a>
+
+        <p class="small pe-lg-4">
+          A co-educational school in Oluyole, Ibadan, offering early years,
+          primary and secondary education.
+        </p>
+
+        <p class="small mb-0">
+          School enquiries: hello@cedargrove.academy
+        </p>
+
+      </div>
+
+      <div class="col-lg-2 col-6">
+        <h5>Explore</h5>
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About us</a>
+        <a href="./academics.html">Academics</a>
+        <a href="./facilities.html">Our facilities</a>
+        <a href="./staff.html">Our staff</a>
+      </div>
+
+      <div class="col-lg-2 col-6">
+        <h5>Information</h5>
+        <a href="./admissions.html">Admissions</a>
+        <a href="./news.html">News & events</a>
+        <a href="./gallery.html">Gallery</a>
+        <a href="./contact.html">Contact</a>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <h5>Get in touch</h5>
+        <p class="small mb-2">Oluyole, Ibadan, Oyo State, Nigeria</p>
+        <p class="small mb-2">+234 800 000 0148</p>
+        <p class="small mb-2">hello@cedargrove.academy</p>
+        <p class="small mt-3">Monday – Friday, 7:30am – 4:00pm</p>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between gap-2">
+
+      <span>
+        © <span data-current-year></span> Cedar Grove Academy. All rights reserved.
+      </span>
+
+      <span>Oluyole, Ibadan · Nigeria</span>
+
+    </div>
+
+  </div>
+</footer>
+
+<button class="back-to-top" type="button" aria-label="Back to top">
+  ↑
+</button>
+
+<!-- Bootstrap JavaScript must load before our own script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="./script.js"></script>
+
+</body>
+</html>
