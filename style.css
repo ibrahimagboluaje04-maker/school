@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 
 :root {
@@ -1058,7 +1059,7 @@ a:not(.navbar-brand) {
   box-shadow: none;
 }
 
-/* TABLET */
+/* TABLET AND NAVIGATION */
 
 @media (max-width: 1199.98px) {
 
@@ -1067,8 +1068,24 @@ a:not(.navbar-brand) {
     gap: .2rem;
   }
 
-  .navbar .nav-link {
-    padding: .72rem .85rem !important;
+  .navbar-collapse {
+    padding: 15px 0 20px;
+    background: #fff;
+  }
+
+  .navbar-collapse .navbar-nav {
+    align-items: stretch;
+  }
+
+  .navbar-collapse .nav-link {
+    display: block;
+    padding: 13px 15px !important;
+    margin-bottom: 3px;
+  }
+
+  .navbar-collapse .btn-brand {
+    display: inline-block;
+    margin: 12px 0 0 !important;
   }
 
   .navbar .nav-link::after {
@@ -1078,6 +1095,31 @@ a:not(.navbar-brand) {
     bottom: .3rem;
   }
 
+}
+
+/* IMPORTANT: BOOTSTRAP MOBILE MENU FIX */
+
+/* Do not override Bootstrap's .collapse, .collapsing
+   or .show display and height behaviour. */
+
+.navbar-collapse {
+  background: #fff;
+}
+
+.navbar-collapse.collapsing {
+  overflow: hidden;
+}
+
+.navbar-collapse.show {
+  visibility: visible;
+  opacity: 1;
+  background: #fff;
+}
+
+@media (max-width: 1199.98px) {
+  .navbar-collapse.show {
+    display: block;
+  }
 }
 
 /* SMALL LAPTOPS AND TABLETS */
@@ -1174,47 +1216,6 @@ a:not(.navbar-brand) {
     width: 40px;
     height: 40px;
     flex-basis: 40px;
-  }
-
-}
-
-/* MOBILE NAVIGATION FIX */
-
-.site-nav {
-  position: sticky;
-  top: 0;
-  z-index: 1030;
-  background: rgba(255,255,255,.98);
-}
-
-.navbar-collapse {
-  background: #fff;
-}
-
-.navbar-collapse.collapsing {
-  overflow: hidden;
-}
-
-@media (max-width: 1199.98px) {
-
-  .navbar-collapse {
-    padding: 15px 0 20px;
-    background: #fff;
-  }
-
-  .navbar-collapse .navbar-nav {
-    align-items: stretch;
-  }
-
-  .navbar-collapse .nav-link {
-    display: block;
-    padding: 13px 15px !important;
-    margin-bottom: 3px;
-  }
-
-  .navbar-collapse .btn-brand {
-    display: inline-block;
-    margin: 12px 0 0 !important;
   }
 
 }
